@@ -1,0 +1,69 @@
+/* Core styles matching Agri-Sight theme */
+:root {
+  --card-radius: 0.75rem;
+  --primary-color: #16a34a;   /* Tailwind green-600 */
+  --primary-hover: #15803d;   /* Tailwind green-700 */
+  --text-color: #1f2937;      /* Tailwind gray-800 */
+  --bg-color: #f3f4f6;        /* Tailwind gray-100 */
+  --border-color: #d1d5db;    /* Tailwind gray-300 */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Card container */
+.card {
+  background-color: #ffffff;
+  border-radius: var(--card-radius);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Form elements */
+input[type="email"],
+input[type="password"] {
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+}
+
+/* Buttons */
+button {
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Links */
+a {
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+/* Checkbox fix */
+input[type="checkbox"] {
+  accent-color: var(--primary-color);
+}

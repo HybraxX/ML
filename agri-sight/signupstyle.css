@@ -1,0 +1,90 @@
+/* ==============================
+   Agri-Sight Auth Pages Styles
+   (Login + Signup)
+   ============================== */
+
+:root {
+  --card-radius: 0.75rem;
+  --primary-color: #16a34a;   /* Tailwind green-600 */
+  --primary-hover: #15803d;   /* Tailwind green-700 */
+  --text-color: #1f2937;      /* Tailwind gray-800 */
+  --bg-color: #f3f4f6;        /* Tailwind gray-100 */
+  --border-color: #d1d5db;    /* Tailwind gray-300 */
+}
+
+/* Base Page */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Card Container */
+.card {
+  background-color: #ffffff;
+  border-radius: var(--card-radius);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Form Inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+  outline: none;
+}
+
+/* Buttons */
+button {
+  background-color: var(--primary-color);
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+  accent-color: var(--primary-color);
+}

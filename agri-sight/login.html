@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agri-Sight — Login</title>
+  <link rel="stylesheet" href="loginstyle.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen">
+
+  <!-- Login Card -->
+  <div class="card w-full max-w-md p-8">
+    <div class="text-center mb-6">
+      <i class="fas fa-leaf text-4xl text-green-600 mb-2"></i>
+      <h1 class="text-2xl font-bold text-gray-900">Agri-Sight Login</h1>
+      <p class="text-sm text-gray-600 mt-1">Access your personalized farmer dashboard</p>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="space-y-4">
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+          placeholder="you@example.com" 
+          required
+        >
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+          placeholder="Enter your password" 
+          required
+        >
+      </div>
+
+      <!-- Remember Me + Forgot -->
+      <div class="flex items-center justify-between text-sm">
+        <label class="flex items-center gap-2">
+          <input type="checkbox" class="rounded border-gray-300 text-green-600 focus:ring-green-500">
+          Remember me
+        </label>
+        <a href="#" class="text-green-600 hover:underline">Forgot password?</a>
+      </div>
+
+      <!-- Login Button -->
+      <button 
+        type="submit" 
+        class="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition"
+      >
+        Login
+      </button>
+    </form>
+
+    <!-- Signup redirect -->
+    <p class="text-sm text-center text-gray-600 mt-6">
+      Don’t have an account? 
+      <a href="signup.html" class="text-green-600 font-semibold hover:underline">Sign up</a>
+    </p>
+  </div>
+
+  <script>
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+
+    if (email) {
+      // extract username (before "@")
+      const username = email.split("@")[0];
+      localStorage.setItem("farmerName", username); // ✅ store username only
+      localStorage.setItem("farmerEmail", email);   // keep full email if needed
+    }
+
+    window.location.href = "index.html";
+  });
+  </script>
+
+ 
+</body>
+</html>
