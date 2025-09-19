@@ -1,0 +1,148 @@
+/* Core styles */
+:root { --card-radius: 0.75rem; }
+body { font-family: 'Inter', sans-serif; }
+.card { 
+  background-color: white; 
+  border-radius: var(--card-radius); 
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.05); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.6s ease forwards;
+}
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+/* Modal */
+#locationModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 28rem;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Nutrient bars */
+.nutrient-bar-container { 
+  width: 100%; 
+  height: 8px; 
+  background: #e5e7eb; 
+  border-radius: 9999px; 
+  overflow: hidden; 
+}
+.nutrient-bar { 
+  height: 100%; 
+  border-radius: 9999px; 
+  transition: width 0.6s ease-in-out;
+}
+
+/* Toggle Switch Style */
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.switch input { display: none; } /* hide default checkbox */
+
+.slider {
+  position: relative;
+  width: 45px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: 0.3s;
+}
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.switch input:checked + .slider {
+  background-color: #22c55e; /* Tailwind green-500 */
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+.switch input:checked + .slider::before {
+  transform: translateX(21px);
+}
+.label-text {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+}
+#sensorControls { margin-bottom: 1.5rem; }
+
+/* Smooth fade-in for sections */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card, .modal-content {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Hover lift effect for cards */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+/* Animated nutrient bars */
+.nutrient-bar {
+  transition: width 0.6s ease-in-out;
+}
+
+/* Toggle switch glow */
+.switch input:checked + .slider {
+  background-color: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+/* Dropdown smooth transition */
+#langMenu, #userMenu {
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  transform-origin: top right;
+  opacity: 0;
+  transform: scale(0.95);
+}
+#langMenu.show, #userMenu.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Weather icon subtle animation */
+#weatherIcon {
+  transition: transform 0.4s ease-in-out;
+}
+#weatherIcon:hover {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* Animated sensor values */
+.animated-number {
+  transition: color 0.3s ease;
+}
+.animated-number.updated {
+  color: #16a34a; /* green-600 */
+}

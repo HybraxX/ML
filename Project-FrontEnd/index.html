@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agri-Sight Dashboard — Professional</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Location Request Modal -->
+  <div id="locationModal" class="flex">
+    <div class="modal-content">
+      <i class="fas fa-map-marker-alt text-4xl text-green-600 mb-4"></i>
+      <h2 class="text-xl font-bold mb-2" data-lang-key="location_title">Location Access Required</h2>
+      <p class="mb-6" data-lang-key="location_prompt">To provide localized weather and recommendations, Agri-Sight needs access to your location.</p>
+      <div class="flex justify-center gap-4">
+        <button id="denyLocation" class="px-6 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 font-semibold" data-lang-key="deny">Deny</button>
+        <button id="allowLocation" class="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 font-semibold" data-lang-key="allow">Allow</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-white shadow-md sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <i class="fas fa-leaf text-2xl text-green-600 mr-2"></i>
+          <h1 class="text-xl font-bold text-gray-900">Agri-Sight</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="relative inline-block">
+            <button id="langBtn" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-md hover:bg-gray-50 focus:ring-2 focus:ring-green-500">
+              <span id="currentLang">English</span>
+              <i class="fas fa-chevron-down ml-1 text-gray-500"></i>
+            </button>
+            
+            <div id="langMenu" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
+              <button data-lang="en" class="block w-full text-left px-4 py-2 hover:bg-gray-100">English</button>
+              <button data-lang="hi" class="block w-full text-left px-4 py-2 hover:bg-gray-100">हिन्दी</button>
+              <button data-lang="bn" class="block w-full text-left px-4 py-2 hover:bg-gray-100">বাংলা</button>
+            </div>
+          </div>
+
+          <button class="p-2 rounded-full hover:bg-gray-200">
+            <i class="fas fa-bell"></i>
+          </button>
+
+          <!-- User Icon with dropdown -->
+          <div class="relative">
+            <button id="userMenuButton" class="p-2 rounded-full hover:bg-gray-200">
+              <i class="fas fa-user-circle text-2xl"></i>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="userMenu" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
+              <a id="loginLink" href="login.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login</a>
+              <a id="signupLink" href="signup.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Signup</a>
+              <a id="settingsLink" href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hidden">Settings</a>
+              <a id="logoutLink" href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hidden">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-semibold text-gray-700" data-lang-key="welcome_message">Welcome back, Farmer!</h2>
+      <div id="locationDisplay" class="hidden items-center text-gray-600 bg-white px-3 py-2 rounded-lg shadow">
+           <i class="fas fa-map-marker-alt text-green-600 mr-2"></i>
+           <span class="font-medium">Fetching location...</span>
+      </div>
+    </div>
+
+    <!-- Device Connection Section -->
+    <div id="deviceContainer" class="card p-6 mb-8 bg-white rounded-2xl shadow-md">
+      <h3 class="text-xl font-semibold mb-4 flex items-center">
+        <i class="fas fa-plug text-green-600 mr-3"></i>
+        Device Connection
+      </h3>
+      
+      <!-- Status + Button -->
+      <div class="flex items-center justify-between mb-4">
+        <p id="deviceStatus" class="font-medium text-gray-700">Status: Disconnected</p>
+        <button id="deviceToggleBtn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+          Connect
+        </button>
+      </div>
+
+      <!-- Sensor Toggles -->
+      <div id="sensorControls" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 hidden">
+        <label class="switch">
+          <input type="checkbox" class="toggle-sensor" data-sensor="water">
+          <span class="slider"></span>
+          <span class="label-text">💧 Water Level Sensor</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" class="toggle-sensor" data-sensor="moisture">
+          <span class="slider"></span>
+          <span class="label-text">🌱 Soil Moisture</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" class="toggle-sensor" data-sensor="dht11">
+          <span class="slider"></span>
+          <span class="label-text">🌡️ DHT11 (Temp & Humidity)</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" class="toggle-sensor" data-sensor="ph">
+          <span class="slider"></span>
+          <span class="label-text">⚗️ pH Sensor</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" class="toggle-sensor" data-sensor="npk">
+          <span class="slider"></span>
+          <span class="label-text">🧪 NPK Sensor</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" class="toggle-sensor" data-sensor="speaker">
+          <span class="slider"></span>
+          <span class="label-text">🔊 Speaker</span>
+        </label>
+      </div>
+
+
+    <!-- Key Metrics Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Visual Diagnostics Card -->
+      <div class="card p-5 bg-green-500 text-white flex flex-col items-center justify-center text-center">
+        <i class="fas fa-camera text-4xl mb-3"></i>
+        <h3 class="text-lg font-bold mb-2" data-lang-key="visual_diag_title">Visual Field Diagnostics</h3>
+        <p class="text-sm mb-4" data-lang-key="visual_diag_desc">Identify pests & diseases from a photo.</p>
+        <button id="startScanBtn" class="bg-white text-green-600 font-bold py-2 px-4 rounded-full hover:bg-green-100 transition-colors" data-lang-key="visual_diag_button">Start Scan</button>
+      </div>
+
+      <div class="card p-5">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-gray-600" data-lang-key="current_crop">Current Crop</h3>
+          <i class="fas fa-seedling text-green-500 text-2xl"></i>
+        </div>
+        <p id="currentCrop" class="text-3xl font-bold text-gray-900 mt-2">Wheat</p>
+        <p class="text-sm text-gray-500" data-lang-key="sown_on">Sown on: 15 Nov 2024</p>
+      </div>
+
+      <div class="card p-5">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-gray-600" data-lang-key="predicted_yield">Predicted Yield</h3>
+          <i class="fas fa-chart-line text-blue-500 text-2xl"></i>
+        </div>
+        <p id="predYield" class="text-3xl font-bold text-gray-900 mt-2">4.2 <span class="text-lg font-medium" data-lang-key="tons_per_hectare">Tons/Hectare</span></p>
+      </div>
+
+      <div class="card p-5">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-gray-600" data-lang-key="weather_forecast">Weather Forecast</h3>
+          <i id="weatherIcon" class="fas fa-cloud-sun-rain text-yellow-500 text-2xl"></i>
+        </div>
+        <div class="mt-2">
+          <p id="weatherDisplay" class="text-3xl font-bold text-gray-900">28°C <span class="text-lg font-medium" data-lang-key="weather_sunny">Sunny</span></p>
+          <p id="weatherDetail" class="text-sm text-gray-500 mt-2" data-lang-key="weather_detail">Allow location to see local weather.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- IoT Sensor Data Section -->
+    <div>
+      <h3 class="text-xl font-semibold mb-4 flex items-center"><i class="fas fa-satellite-dish text-green-600 mr-3"></i><span data-lang-key="live_monitoring">Live Field Monitoring (IoT Sensors)</span></h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Soil Moisture -->
+        <div id="soilMoistureCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-tint mr-3 text-2xl text-cyan-500"></i>
+            <h4 class="font-semibold" data-lang-key="soil_moisture">Soil Moisture</h4>
+          </div>
+          <p id="soilMoistureValue" class="text-3xl font-bold text-gray-900 mt-2">38% <span id="soilMoistureStatus" class="text-lg font-medium text-orange-500" data-lang-key="status_low">Low</span></p>
+          <p id="soilMoistureUpdated" class="text-sm text-gray-500 mt-2" data-lang-key="last_update">Last update: 2 mins ago</p>
+        </div>
+
+        <!-- Soil pH -->
+        <div id="soilPhCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-vial mr-3 text-2xl text-purple-500"></i>
+            <h4 class="font-semibold" data-lang-key="soil_ph">Soil pH</h4>
+          </div>
+          <p id="soilPhValue" class="text-3xl font-bold text-gray-900 mt-2">6.4</p>
+          <p id="soilPhUpdated" class="text-sm text-gray-500 mt-2" data-lang-key="last_update">Last update: 2 mins ago</p>
+        </div>
+
+        <!-- Air Humidity -->
+        <div id="airHumidityCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-wind mr-3 text-2xl text-indigo-500"></i>
+            <h4 class="font-semibold" data-lang-key="air_humidity">Air Humidity</h4>
+          </div>
+          <p id="airHumidityValue" class="text-3xl font-bold text-gray-900 mt-2">62%</p>
+          <p id="airHumidityUpdated" class="text-sm text-gray-500 mt-2" data-lang-key="last_update">Last update: 2 mins ago</p>
+        </div>
+
+        <!-- Water Level -->
+        <div id="waterLevelCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-water mr-3 text-2xl text-blue-500"></i>
+            <h4 class="font-semibold">Water Level</h4>
+          </div>
+          <p id="waterLevelValue" class="text-3xl font-bold text-gray-900 mt-2">75%</p>
+          <p id="waterLevelUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
+        </div>
+
+        <!-- Air Temperature -->
+        <div id="airTempCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-temperature-high mr-3 text-2xl text-orange-500"></i>
+            <h4 class="font-semibold">Soil Temperature</h4>
+          </div>
+          <p id="airTempValue" class="text-3xl font-bold text-gray-900 mt-2">29°C</p>
+          <p id="airTempUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
+        </div>
+
+        <!-- NPK -->
+        <div id="npkSensorCard" class="card p-5">
+          <h4 class="font-semibold mb-2">Soil Nutrients (Quick)</h4>
+          <div class="space-y-3 mt-3">
+            <div class="text-sm">
+              <div class="flex justify-between font-medium"><p data-lang-key="nutrient_n">Nitrogen (N)</p><p id="nutNStatusSmall" class="text-green-600" data-lang-key="status_good">Good</p></div>
+              <div class="nutrient-bar-container mt-1"><div id="nutNBarSmall" class="nutrient-bar bg-green-500" style="width: 70%"></div></div>
+            </div>
+            <div class="text-sm">
+              <div class="flex justify-between font-medium"><p data-lang-key="nutrient_p">Phosphorus (P)</p><p id="nutPStatusSmall" class="text-yellow-600" data-lang-key="status_fair">Fair</p></div>
+              <div class="nutrient-bar-container mt-1"><div id="nutPBarSmall" class="nutrient-bar bg-yellow-500" style="width: 55%"></div></div>
+            </div>
+            <div class="text-sm">
+              <div class="flex justify-between font-medium"><p>Potassium (K)</p><p id="nutKStatusSmall" class="text-blue-600">Good</p></div>
+              <div class="nutrient-bar-container mt-1"><div id="nutKBarSmall" class="nutrient-bar bg-blue-500" style="width: 65%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaker -->
+        <div id="speakerCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-volume-up mr-3 text-2xl text-red-500"></i>
+            <h4 class="font-semibold">Speaker</h4>
+          </div>
+          <p id="speakerStatus" class="text-2xl font-bold text-gray-900 mt-2">OFF</p>
+          <p id="speakerUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Crop input + recommendations -->
+    <div class="w-full mb-8">
+      <div class="card p-6 bg-white rounded-2xl shadow-md w-full">
+        <h3 class="text-2xl font-bold mb-2 text-green-700" data-lang-key="crop_input_title">
+          🌾 Crop Planner & Recommendations
+        </h3>
+        <p class="text-sm text-gray-600 mb-4" data-lang-key="crop_input_desc">
+          Enter the crop you want to grow. We’ll check your soil condition and recommend the best crops or guide you with amendments.
+        </p>
+
+        <label for="cropInput" class="block text-gray-700 font-medium mb-2">Enter your crop name:</label>
+        <input 
+          id="cropInput" 
+          class="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-2 focus:ring-green-500 focus:outline-none" 
+          placeholder="e.g. Wheat, Maize, Tomato" 
+        />
+        <p class="text-xs text-gray-500 mt-1">Tip: Use common names like 'Rice', 'Potato', etc.</p>
+
+        <div class="flex flex-col sm:flex-row gap-3 mt-4 w-full">
+          <button id="recommendBtn" class="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition">🌱 Get Recommendations</button>
+          <button id="suggestBtn" class="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">🛠️ Suggest Soil Amendments</button>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div id="cropSuggestions" class="space-y-2"></div>
+          <div id="amendmentSuggestions" class="space-y-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yield History Chart -->
+    <div class="card p-5 lg:col-span-2">
+      <h3 class="text-xl font-semibold mb-4" data-lang-key="yield_history">Yield History (Wheat)</h3>
+      <div style="height:260px;"><canvas id="yieldChart"></canvas></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow-inner mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col sm:flex-row justify-between text-gray-500 text-sm">
+      <p>&copy; 2025 Agri-Sight. All rights reserved.</p>
+      <div class="flex space-x-4 mt-2 sm:mt-0">
+        <a href="#" class="hover:text-green-600">Privacy Policy</a>
+        <a href="#" class="hover:text-green-600">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
