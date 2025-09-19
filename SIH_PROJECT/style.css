@@ -1,0 +1,92 @@
+/* Core styles */
+:root { --card-radius: 0.75rem; }
+body { font-family: 'Inter', sans-serif; }
+.card { 
+  background-color: white; 
+  border-radius: var(--card-radius); 
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.05); 
+}
+
+/* Modal */
+#locationModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 28rem;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Nutrient bars */
+.nutrient-bar-container { 
+  width: 100%; 
+  height: 8px; 
+  background: #e5e7eb; 
+  border-radius: 9999px; 
+  overflow: hidden; 
+}
+.nutrient-bar { 
+  height: 100%; 
+  border-radius: 9999px; 
+}
+
+/* Toggle Switch Style */
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switch input {
+  display: none; /* hide default checkbox */
+}
+
+.slider {
+  position: relative;
+  width: 45px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: 0.3s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.switch input:checked + .slider {
+  background-color: #22c55e; /* Tailwind green-500 */
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(21px);
+}
+
+.label-text {
+  font-size: 14px;
+  color: #374151; /* Tailwind gray-700 */
+  font-weight: 500;
+}
+
+#sensorControls {
+  margin-bottom: 1.5rem; /* 24px */
+}
