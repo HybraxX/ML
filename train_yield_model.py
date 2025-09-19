@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-train_yield_model.py
-
-This script implements the core machine learning model for the CipherStorm project.
-It creates a synthetic dataset, trains an XGBoost model, evaluates it,
-and saves the trained model to 'yield_model.pkl'. This must be run first.
-"""
 import pandas as pd
 import numpy as np
 import xgboost as xgb
