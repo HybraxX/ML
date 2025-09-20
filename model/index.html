@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Yield Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .form-label { @apply text-gray-700 text-sm font-medium mb-1 block; }
+        .form-input { @apply w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 transition; }
+        .btn-predict { @apply w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-transform transform hover:scale-105; }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12 my-8">
+        
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-800">🌿 Crop Yield Predictor</h1>
+            <p class="text-gray-500 mt-2">Enter field data below to get a yield prediction from the AI model.</p>
+        </div>
+
+        <!-- Prediction Form -->
+        <form id="prediction-form" class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+            
+            <!-- Column 1: Soil Nutrients -->
+            <div>
+                <label for="N" class="form-label">Nitrogen (N)</label>
+                <input type="number" step="any" id="N" class="form-input" value="90" required>
+            </div>
+            <div>
+                <label for="P" class="form-label">Phosphorus (P)</label>
+                <input type="number" step="any" id="P" class="form-input" value="42" required>
+            </div>
+            <div>
+                <label for="K" class="form-label">Potassium (K)</label>
+                <input type="number" step="any" id="K" class="form-input" value="43" required>
+            </div>
+            
+            <!-- Column 2: Environmental Conditions -->
+            <div>
+                <label for="Temperature" class="form-label">Temperature (°C)</label>
+                <input type="number" step="any" id="Temperature" class="form-input" value="20.2" required>
+            </div>
+            <div>
+                <label for="Humidity" class="form-label">Humidity (%)</label>
+                <input type="number" step="any" id="Humidity" class="form-input" value="80" required>
+            </div>
+            <div>
+                <label for="pH" class="form-label">Soil pH</label>
+                <input type="number" step="any" id="pH" class="form-input" value="6.5" required>
+            </div>
+
+            <!-- Column 3: Other Factors -->
+            <div>
+                <label for="Soil_Moisture" class="form-label">Soil Moisture</label>
+                <input type="number" step="any" id="Soil_Moisture" class="form-input" value="60" required>
+            </div>
+             <div>
+                <label for="FN" class="form-label">Fertilizer Nitrogen (FN)</label>
+                <input type="number" step="any" id="FN" class="form-input" value="162" required>
+            </div>
+            <div>
+                <label for="FP" class="form-label">Fertilizer Phosphorus (FP)</label>
+                <input type="number" step="any" id="FP" class="form-input" value="73" required>
+            </div>
+            <div>
+                <label for="FK" class="form-label">Fertilizer Potassium (FK)</label>
+                <input type="number" step="any" id="FK" class="form-input" value="29" required>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="md:col-span-3 mt-4">
+                <button type="submit" id="predict-button" class="btn-predict">Predict Yield</button>
+            </div>
+        </form>
+
+        <!-- Result Display Section -->
+        <div id="result-container" class="mt-10 text-center hidden">
+            <h2 class="text-2xl font-semibold text-gray-800">Predicted Yield</h2>
+            <div id="result" class="mt-4 text-5xl font-bold text-emerald-600 bg-emerald-50 p-6 rounded-xl">
+                <!-- Prediction will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('prediction-form');
+        const resultContainer = document.getElementById('result-container');
+        const resultDiv = document.getElementById('result');
+        const predictButton = document.getElementById('predict-button');
+
+        // Listen for the form submission event
+        form.addEventListener('submit', async (event) => {
+            // Prevent the default form action (which is to reload the page)
+            event.preventDefault();
+
+            // Indicate to the user that something is happening
+            predictButton.textContent = 'Analyzing Data...';
+            predictButton.disabled = true;
+
+            // 1. Collect data from all form inputs into a single object
+            const formData = {
+                N: parseFloat(document.getElementById('N').value),
+                P: parseFloat(document.getElementById('P').value),
+                K: parseFloat(document.getElementById('K').value),
+                Soil_Moisture: parseFloat(document.getElementById('Soil_Moisture').value),
+                Temperature: parseFloat(document.getElementById('Temperature').value),
+                Humidity: parseFloat(document.getElementById('Humidity').value),
+                pH: parseFloat(document.getElementById('pH').value),
+                FN: parseFloat(document.getElementById('FN').value),
+                FP: parseFloat(document.getElementById('FP').value),
+                FK: parseFloat(document.getElementById('FK').value),
+            };
+
+            // 2. Send the data to the FastAPI backend using the Fetch API
+            try {
+                const response = await fetch('http://127.0.0.1:8000/predict/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData), // Convert the JS object to a JSON string
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+
+                // 3. Display the result from the API
+                if (data.predicted_yield) {
+                    resultDiv.textContent = data.predicted_yield;
+                } else {
+                    resultDiv.textContent = 'Error: ' + (data.error || 'Invalid response from API');
+                }
+                 resultContainer.classList.remove('hidden'); // Make the result visible
+
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+                resultDiv.textContent = 'Could not connect to the prediction API.';
+                resultContainer.classList.remove('hidden');
+            } finally {
+                // Restore the button to its original state whether the API call succeeded or failed
+                predictButton.textContent = 'Predict Yield';
+                predictButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
+
