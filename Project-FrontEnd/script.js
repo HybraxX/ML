@@ -399,6 +399,40 @@ function updateSensorUI(data) {
   const elNutPS = document.getElementById('nutPStatusSmall'); if (elNutPS) elNutPS.textContent = pStatus;
   const elNutKS = document.getElementById('nutKStatusSmall'); if (elNutKS) elNutKS.textContent = kStatus;
 
+   // 🌊 Water Level Bars & Status
+  const lowBar = document.getElementById("waterLowBar");
+  const medBar = document.getElementById("waterMediumBar");
+  const highBar = document.getElementById("waterHighBar");
+
+  if (lowBar) lowBar.style.width = "0%";
+  if (medBar) medBar.style.width = "0%";
+  if (highBar) highBar.style.width = "0%";
+
+  if (wl < 20 && lowBar) {
+    lowBar.style.width = wl + "%";
+  } else if (wl >= 20 && wl <= 80 && medBar) {
+    medBar.style.width = wl + "%";
+  } else if (wl > 80 && highBar) {
+    highBar.style.width = wl + "%";
+  }
+
+  // Update water level status
+  const statusEl = document.getElementById("waterLevelStatus");
+  if (statusEl) {
+    if (wl > 80) {
+      statusEl.textContent = "Status: High (Overflow Risk)";
+      statusEl.className = "text-sm font-semibold mt-3 text-red-600";
+      // alert("⚠️ Water Level HIGH! (" + wl + "%)"); // optional
+    } else if (wl < 20) {
+      statusEl.textContent = "Status: Low (Critical)";
+      statusEl.className = "text-sm font-semibold mt-3 text-blue-600";
+      // alert("⚠️ Water Level LOW! (" + wl + "%)"); // optional
+    } else {
+      statusEl.textContent = "Status: Normal";
+      statusEl.className = "text-sm font-semibold mt-3 text-green-600";
+    }
+  }
+
   // Save latest soil state for recommendations
   window._LATEST_SOIL = { moisture: m, ph: ph, temp: soilTemp, nitrogen: n, phosphorus: p, potassium: k, air_humidity: ah };
 }

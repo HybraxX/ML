@@ -203,15 +203,45 @@
           <p id="airHumidityUpdated" class="text-sm text-gray-500 mt-2" data-lang-key="last_update">Last update: 2 mins ago</p>
         </div>
 
-        <!-- Water Level -->
-        <div id="waterLevelCard" class="card p-5">
-          <div class="flex items-center text-gray-600">
-            <i class="fas fa-water mr-3 text-2xl text-blue-500"></i>
-            <h4 class="font-semibold">Water Level</h4>
-          </div>
-          <p id="waterLevelValue" class="text-3xl font-bold text-gray-900 mt-2">75%</p>
-          <p id="waterLevelUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
-        </div>
+       <!-- Water Level --> 
+<div id="waterLevelCard" class="card p-5">
+  <div class="flex items-center text-gray-600">
+    <i class="fas fa-water mr-3 text-2xl text-blue-500"></i>
+    <h4 class="font-semibold">Water Level</h4>
+  </div>
+
+  <!-- Current percentage -->
+  <p id="waterLevelValue" class="text-3xl font-bold text-gray-900 mt-2">75%</p>
+  <p id="waterLevelUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
+
+  <!-- Water Level Indicators -->
+  <div class="mt-4 space-y-2">
+    <!-- Low -->
+    <div>
+      <p class="text-sm font-medium text-gray-600">Low (<20%)</p>
+      <div class="nutrient-bar-container">
+        <div id="waterLowBar" class="nutrient-bar bg-blue-600" style="width: 25%;"></div>
+      </div>
+    </div>
+    <!-- Medium -->
+    <div>
+      <p class="text-sm font-medium text-gray-600">Medium (21%-80%)</p>
+      <div class="nutrient-bar-container">
+        <div id="waterMediumBar" class="nutrient-bar bg-yellow-400" style="width: 50%;"></div>
+      </div>
+    </div>
+    <!-- High -->
+    <div>
+      <p class="text-sm font-medium text-gray-600">High (>80%)</p>
+      <div class="nutrient-bar-container">
+        <div id="waterHighBar" class="nutrient-bar bg-red-600" style="width: 75%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Water Level Status (added here, after the bars) -->
+  <p id="waterLevelStatus" class="text-sm font-semibold mt-3 text-gray-600">Status: Normal</p>
+</div>
 
         <!-- Air Temperature -->
         <div id="airTempCard" class="card p-5">
