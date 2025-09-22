@@ -153,7 +153,7 @@ const weatherDetail = document.getElementById('weatherDetail');
 const weatherIcon = document.getElementById('weatherIcon');
 
 // Replace with your OpenWeatherMap API key to enable live fetches
-const OPENWEATHER_API_KEY = 'd88e93af3e36ea377bf84d64f92ec221';
+const OPENWEATHER_API_KEY = 'Rd88e93af3e36ea377bf84d64f92ec221';
 
 // show modal only if geolocation available
 if (locationModal) {
