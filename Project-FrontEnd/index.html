@@ -115,8 +115,110 @@
         </label>
       </div>
     </div> <div class="card p-6 mb-8 bg-white rounded-2xl shadow-md">
+
+     
+
+    <div>
+      <div class="card p-5">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-gray-600" data-lang-key="weather_forecast">Weather Forecast</h3>
+          <i id="weatherIcon" class="fas fa-cloud-sun-rain text-yellow-500 text-2xl"></i>
+        </div>
+        <div class="mt-2">
+          <p id="weatherDisplay" class="text-3xl font-bold text-gray-900">28°C <span class="text-lg font-medium" data-lang-key="weather_sunny">Sunny</span></p>
+          <p id="weatherDetail" class="text-sm text-gray-500 mt-2" data-lang-key="weather_detail">Allow location to see local weather.</p>
+        </div>
+      </div>
+    </div>
+      <h3 class="text-xl font-semibold mb-4 flex items-center"><i class="fas fa-satellite-dish text-green-600 mr-3"></i><span data-lang-key="live_monitoring">Live Field Monitoring (IoT Sensors)</span></h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div id="soilMoistureCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-tint mr-3 text-2xl text-cyan-500"></i>
+            <h4 class="font-semibold" data-lang-key="soil_moisture">Soil Moisture</h4>
+          </div>
+          <p id="soilMoistureValue" class="text-3xl font-bold text-gray-900 mt-2">38% <span id="soilMoistureStatus" class="text-lg font-medium text-orange-500" data-lang-key="status_low">Low</span></p>
+          <p id="soilMoistureUpdated" class="text-sm text-gray-500 mt-2" data-lang-key="last_update">Last update: 2 mins ago</p>
+           </div>
+
+        <div id="soilPhCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-vial mr-3 text-2xl text-purple-500"></i>
+            <h4 class="font-semibold" data-lang-key="soil_ph">Soil pH</h4>
+          </div>
+          <p id="soilPhValue" class="text-3xl font-bold text-gray-900 mt-2">6.4</p>
+          <p id="soilPhUpdated" class="text-sm text-gray-500 mt-2" data-lang-key="last_update">Last update: 2 mins ago</p>
+           </div>
+
+        <div id="airHumidityCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-wind mr-3 text-2xl text-indigo-500"></i>
+            <h4 class="font-semibold" data-lang-key="air_humidity">Air Humidity</h4>
+          </div>
+          <p id="airHumidityValue" class="text-3xl font-bold text-gray-900 mt-2">62%</p>
+          <p id="airHumidityUpdated" class="text-sm text-gray-500 mt-2" data-lang-key="last_update">Last update: 2 mins ago</p>
+         </div>
+
+        <div id="waterLevelCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-water mr-3 text-2xl text-blue-500"></i>
+            <h4 class="font-semibold">Water Level</h4>
+          </div>
+          <p id="waterLevelValue" class="text-3xl font-bold text-gray-900 mt-2">75%</p>
+          <p id="waterLevelUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
+          <div class="mt-4 space-y-2">
+            <div>
+              <p class="text-sm font-medium text-gray-600">Low (&lt;20%)</p>
+              <div class="nutrient-bar-container">
+                <div id="waterLowBar" class="nutrient-bar bg-blue-600" style="width: 25%;"></div>
+              </div>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-600">Medium (21%-80%)</p>
+              <div class="nutrient-bar-container">
+                <div id="waterMediumBar" class="nutrient-bar bg-yellow-400" style="width: 50%;"></div>
+              </div>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-600">High (&gt;80%)</p>
+              <div class="nutrient-bar-container">
+                <div id="waterHighBar" class="nutrient-bar bg-red-600" style="width: 75%;"></div>
+              </div>
+            </div>
+          </div>
+          <p id="waterLevelStatus" class="text-sm font-semibold mt-3 text-gray-600">Status: Normal</p>
+        </div>
+
+        <div id="airTempCard" class="card p-5">
+          <div class="flex items-center text-gray-600">
+            <i class="fas fa-temperature-high mr-3 text-2xl text-orange-500"></i>
+            <h4 class="font-semibold">Soil Temperature</h4>
+          </div>
+          <p id="airTempValue" class="text-3xl font-bold text-gray-900 mt-2">29°C</p>
+          <p id="waterLevelUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
+         </div>
+
+        <div id="npkSensorCard" class="card p-5">
+          <h4 class="font-semibold mb-2">Soil Nutrients (Quick)</h4>
+          <div class="space-y-3 mt-3">
+            <div class="text-sm">
+              <div class="flex justify-between font-medium"><p data-lang-key="nutrient_n">Nitrogen (N)</p><p id="nutNStatusSmall" class="text-green-600" data-lang-key="status_good">Good</p></div>
+              <div class="nutrient-bar-container mt-1"><div id="nutNBarSmall" class="nutrient-bar bg-green-500" style="width: 70%"></div></div>
+            </div>
+            <div class="text-sm">
+              <div class="flex justify-between font-medium"><p data-lang-key="nutrient_p">Phosphorus (P)</p><p id="nutPStatusSmall" class="text-yellow-600" data-lang-key="status_fair">Fair</p></div>
+              <div class="nutrient-bar-container mt-1"><div id="nutPBarSmall" class="nutrient-bar bg-yellow-500" style="width: 55%"></div></div>
+            </div>
+            <div class="text-sm">
+              <div class="flex justify-between font-medium"><p>Potassium (K)</p><p id="nutKStatusSmall" class="text-blue-600">Good</p></div>
+              <div class="nutrient-bar-container mt-1"><div id="nutKBarSmall" class="nutrient-bar bg-blue-500" style="width: 65%"></div></div>
+            </div>
+          </div>
+        </div>
+    
+
       <style>
-        #cropDropdown {
+         #cropDropdown {
           max-height: 0;
           overflow: hidden;
           transition: max-height 0.5s ease-in-out;
@@ -159,7 +261,7 @@
           </div>
         </div>
       </div>
-      <div class="text-center w-full mt-6">
+      <div class="text-align w-full mt-6">
         <a href="farming.html" class="inline-block bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-green-700 transition-colors duration-300">
           Start Farming
         </a>

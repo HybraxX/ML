@@ -9,6 +9,45 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+     <header class="bg-white shadow-md sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <i class="fas fa-leaf text-2xl text-green-600 mr-2"></i>
+          <h1 class="text-xl font-bold text-gray-900">Agri-Sight</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="relative inline-block">
+            <button id="langBtn" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-md hover:bg-gray-50 focus:ring-2 focus:ring-green-500">
+              <span id="currentLang">English</span>
+              <i class="fas fa-chevron-down ml-1 text-gray-500"></i>
+            </button>
+            <div id="langMenu" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
+              <button data-lang="en" class="block w-full text-left px-4 py-2 hover:bg-gray-100">English</button>
+              <button data-lang="hi" class="block w-full text-left px-4 py-2 hover:bg-gray-100">हिन्दी</button>
+              <button data-lang="bn" class="block w-full text-left px-4 py-2 hover:bg-gray-100">বাংলা</button>
+            </div>
+          </div>
+          <button class="p-2 rounded-full hover:bg-gray-200">
+            <i class="fas fa-bell"></i>
+          </button>
+          <div class="relative">
+            <button id="userMenuButton" class="p-2 rounded-full hover:bg-gray-200">
+              <i class="fas fa-user-circle text-2xl"></i>
+            </button>
+            <div id="userMenu" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
+              <a id="loginLink" href="login.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login</a>
+              <a id="signupLink" href="signup.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Signup</a>
+              <a id="settingsLink" href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hidden">Settings</a>
+              <a id="logoutLink" href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hidden">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
     <style>
         body {
             background-color: #f7fafc; /* A light gray background */
@@ -52,7 +91,7 @@
           <i class="fas fa-seedling text-green-500 text-2xl"></i>
         </div>
         <p id="currentCrop" class="text-3xl font-bold text-gray-900 mt-2">Wheat</p>
-        <p class="text-sm text-gray-500" data-lang-key="sown_on">Sown on: 15 Nov 2024</p>
+        <p class="text-sm text-gray-500" data-lang-key="sown_on">Sown on: 23 Sep 2025</p>
       </div>
 
       <div class="card p-5">
@@ -85,6 +124,7 @@
           </div>
           <p id="soilMoistureValue" class="text-3xl font-bold text-gray-900 mt-2">38% <span id="soilMoistureStatus" class="text-lg font-medium text-orange-500" data-lang-key="status_low">Low</span></p>
           <p id="soilMoistureUpdated" class="text-sm text-gray-500 mt-2" data-lang-key="last_update">Last update: 2 mins ago</p>
+           <p id="soilMoistureUpdated" class="text-sm text-gray-600 mt-2" data-lang-key="last_update">Recommended: 45%-60%</p>
         </div>
 
         <div id="soilPhCard" class="card p-5">
@@ -94,6 +134,7 @@
           </div>
           <p id="soilPhValue" class="text-3xl font-bold text-gray-900 mt-2">6.4</p>
           <p id="soilPhUpdated" class="text-sm text-gray-500 mt-2" data-lang-key="last_update">Last update: 2 mins ago</p>
+          <p id="soilPhUpdated" class="text-sm text-gray-600 mt-2" data-lang-key="last_update">Recommended: 7.3</p>
         </div>
 
         <div id="airHumidityCard" class="card p-5">
@@ -103,6 +144,7 @@
           </div>
           <p id="airHumidityValue" class="text-3xl font-bold text-gray-900 mt-2">62%</p>
           <p id="airHumidityUpdated" class="text-sm text-gray-500 mt-2" data-lang-key="last_update">Last update: 2 mins ago</p>
+          <p id="airHumidityUpdated" class="text-sm text-gray-600 mt-2" data-lang-key="last_update">Recommended: 50%</p>
         </div>
 
         <div id="waterLevelCard" class="card p-5">
@@ -112,6 +154,7 @@
           </div>
           <p id="waterLevelValue" class="text-3xl font-bold text-gray-900 mt-2">75%</p>
           <p id="waterLevelUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
+          <p id="waterLevelUpdated" class="text-sm text-gray-600 mt-2">Recommended: 67%</p>
           <div class="mt-4 space-y-2">
             <div>
               <p class="text-sm font-medium text-gray-600">Low (&lt;20%)</p>
@@ -141,7 +184,8 @@
             <h4 class="font-semibold">Soil Temperature</h4>
           </div>
           <p id="airTempValue" class="text-3xl font-bold text-gray-900 mt-2">29°C</p>
-          <p id="airTempUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
+          <p id="waterLevelUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
+          <p id="waterLevelUpdated" class="text-sm text-gray-600 mt-2">Recommended: 27°C-35°C</p>
         </div>
 
         <div id="npkSensorCard" class="card p-5">
@@ -162,14 +206,7 @@
           </div>
         </div>
 
-        <div id="speakerCard" class="card p-5">
-          <div class="flex items-center text-gray-600">
-            <i class="fas fa-volume-up mr-3 text-2xl text-red-500"></i>
-            <h4 class="font-semibold">Speaker</h4>
-          </div>
-          <p id="speakerStatus" class="text-2xl font-bold text-gray-900 mt-2">OFF</p>
-          <p id="speakerUpdated" class="text-sm text-gray-500 mt-2">Last update: 2 mins ago</p>
-        </div>
+       
       </div>
     </div>
 
