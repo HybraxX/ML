@@ -13,6 +13,27 @@ body { font-family: 'Inter', sans-serif; }
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
 }
 
+/* Animate heading + logo for Welcome and Live Monitoring */
+[data-lang-key="welcome_message"],
+[data-lang-key="live_monitoring"],
+.fa-satellite-dish {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Delays for stagger effect */
+[data-lang-key="welcome_message"] { animation-delay: 0.1s; }
+.fa-satellite-dish { animation-delay: 0.1s; }
+[data-lang-key="live_monitoring"] { animation-delay: 0.1s; }
+
+/* Animate Go to Crop Planner button */
+#goToPlannerBtn {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: 0.1s; /* appears after headings */
+}
+
+
 /* Modal */
 #locationModal {
   display: none;
@@ -145,4 +166,23 @@ body { font-family: 'Inter', sans-serif; }
 }
 .animated-number.updated {
   color: #16a34a; /* green-600 */
+}
+
+/* Reset Button */
+#resetBtn {
+  transition: all 0.3s ease;
+}
+#resetBtn:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transform: scale(1.05);
+}
+
+/* Crop Dropdown Animation */
+#cropDropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+}
+#cropDropdown.open {
+  max-height: 300px;
 }
