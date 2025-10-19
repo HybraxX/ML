@@ -6,9 +6,9 @@ import joblib
 
 try:
     df = pd.read_csv('yield_dataset_realistic.csv')
-    print("✅ Dataset 'yield_dataset_realistic.csv' loaded successfully.")
+    print("model loaded")
 except FileNotFoundError:
-    print("❌ Error: 'yield_dataset_realistic.csv' not found. Please place it in the same directory.")
+    print("model not loaded")
     exit()
 print("\nDataset columns:")
 print(df.columns)
@@ -25,16 +25,16 @@ print(f"\nData split into {len(X_train)} training samples and {len(X_test)} test
 print("\nTraining the Random Forest model on the new dataset...")
 model = RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1)
 model.fit(X_train, y_train)
-print("✅ Model training complete.")
+print(" Model training complete.")
 predictions = model.predict(X_test)
 mae = mean_absolute_error(y_test, predictions)
 r2 = r2_score(y_test, predictions)
 
-print("\n📈 Model Performance on New Test Data:")
+print("\n Model Performance on Test Data:")
 print(f"   - Mean Absolute Error (MAE): {mae:.2f}")
 print(f"   - R-squared (R2 Score): {r2:.2f}")
 
 model_filename = 'crop_yield_prediction_model.pkl'
 joblib.dump(model, model_filename)
-print(f"\n✅ New model saved successfully as '{model_filename}'")
+print(f"\n New model saved successfully as '{model_filename}'")
 
