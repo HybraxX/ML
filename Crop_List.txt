@@ -1,14 +1,12 @@
 Banana
 Black Gram
-Broccoli and Cabbage
 Brinjal
+Broccoli and Cabbage
 Cardamom
 Cashew
-Groundnut
-Groundnu
-Green Gram
-Greengram and Blackgram
 Ginger
+Green Gram
+Groundnut
 Guava
 Jackfruit
 Jute
@@ -20,13 +18,11 @@ Mung Bean
 Mustard
 Oilseeds
 Orange
-Oranges
 Pearlmillet
 Pineapples
 Potato
-Rice
-Rice (Paschim Medinipur)
 Redgram (Pigeon Pea)
+Rice
 Strawberries
 Sugarcane
 Tea
